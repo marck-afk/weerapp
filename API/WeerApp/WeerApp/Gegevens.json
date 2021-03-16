@@ -1,0 +1,44 @@
+{
+  "liveweer": [
+    {
+
+
+
+      "samenv": "Geheel bewolkt",
+      "ldmmhg": "761",
+      "verw": "Wisselend bewolkt en enkele buien. Morgen langdurige regen",
+      "image": "bewolkt",
+      "d0weer": "bewolkt",
+      "d0tmax": "8",
+      "d0tmin": "4",
+      "d0windk": "3",
+      "d0windknp": "8",
+      "d0windms": "4",
+      "d0windkmh": "15",
+      "d0windr": "NW",
+      "d0neerslag": "25",
+      "d0zon": "7",
+      "d1weer": "regen",
+      "d1tmax": "8",
+      "d1tmin": "4",
+      "d1windk": "2",
+      "d1windknp": "6",
+      "d1windms": "3",
+      "d1windkmh": "11",
+      "d1windr": "NW",
+      "d1neerslag": "80",
+      "d1zon": "10",
+      "d2weer": "halfbewolkt_regen",
+      "d2tmax": "7",
+      "d2tmin": "2",
+      "d2windk": "2",
+      "d2windknp": "6",
+      "d2windms": "3",
+      "d2windkmh": "11",
+      "d2windr": "N",
+      "d2neerslag": "40",
+      "d2zon": "30",
+      "alarm": "0"
+    }
+  ]
+}
