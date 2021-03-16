@@ -45,30 +45,32 @@ namespace WeerApp
             "Temparatuur",
             "Neerslag",
             "Wind",
-            "Mist",
+            "Lucht",
             "Zon"});
             this.ClbData.Location = new System.Drawing.Point(13, 42);
             this.ClbData.Name = "ClbData";
-            this.ClbData.Size = new System.Drawing.Size(226, 89);
+            this.ClbData.Size = new System.Drawing.Size(226, 106);
             this.ClbData.TabIndex = 0;
             // 
             // BtnSave
             // 
-            this.BtnSave.Location = new System.Drawing.Point(13, 189);
+            this.BtnSave.Location = new System.Drawing.Point(12, 206);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(110, 46);
             this.BtnSave.TabIndex = 1;
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.SaveJson);
             // 
             // BtnLoad
             // 
-            this.BtnLoad.Location = new System.Drawing.Point(129, 189);
+            this.BtnLoad.Location = new System.Drawing.Point(128, 206);
             this.BtnLoad.Name = "BtnLoad";
             this.BtnLoad.Size = new System.Drawing.Size(110, 46);
             this.BtnLoad.TabIndex = 2;
             this.BtnLoad.Text = "Load";
             this.BtnLoad.UseVisualStyleBackColor = true;
+            this.BtnLoad.Click += new System.EventHandler(this.LoadJson);
             // 
             // CbxPlaats
             // 
@@ -89,7 +91,7 @@ namespace WeerApp
             // 
             // BtnLoadResults
             // 
-            this.BtnLoadResults.Location = new System.Drawing.Point(12, 137);
+            this.BtnLoadResults.Location = new System.Drawing.Point(11, 154);
             this.BtnLoadResults.Name = "BtnLoadResults";
             this.BtnLoadResults.Size = new System.Drawing.Size(227, 46);
             this.BtnLoadResults.TabIndex = 6;
@@ -101,7 +103,7 @@ namespace WeerApp
             // 
             this.RtbResults.Location = new System.Drawing.Point(245, 12);
             this.RtbResults.Name = "RtbResults";
-            this.RtbResults.Size = new System.Drawing.Size(303, 223);
+            this.RtbResults.Size = new System.Drawing.Size(303, 240);
             this.RtbResults.TabIndex = 7;
             this.RtbResults.Text = "";
             // 
@@ -109,7 +111,7 @@ namespace WeerApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 251);
+            this.ClientSize = new System.Drawing.Size(564, 264);
             this.Controls.Add(this.RtbResults);
             this.Controls.Add(this.BtnLoadResults);
             this.Controls.Add(this.label1);
