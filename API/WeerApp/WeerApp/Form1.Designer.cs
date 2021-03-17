@@ -29,34 +29,24 @@ namespace WeerApp
         /// </summary>
         private void InitializeComponent()
         {
-            this.ClbData = new System.Windows.Forms.CheckedListBox();
             this.BtnSave = new System.Windows.Forms.Button();
             this.BtnLoad = new System.Windows.Forms.Button();
             this.CbxPlaats = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnLoadResults = new System.Windows.Forms.Button();
             this.RtbResults = new System.Windows.Forms.RichTextBox();
+            this.CbxTemperatuur = new System.Windows.Forms.CheckBox();
+            this.CbxNeerslag = new System.Windows.Forms.CheckBox();
+            this.CbxWind = new System.Windows.Forms.CheckBox();
+            this.CbxLucht = new System.Windows.Forms.CheckBox();
+            this.CbxZon = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
-            // 
-            // ClbData
-            // 
-            this.ClbData.FormattingEnabled = true;
-            this.ClbData.Items.AddRange(new object[] {
-            "Temparatuur",
-            "Neerslag",
-            "Wind",
-            "Lucht",
-            "Zon"});
-            this.ClbData.Location = new System.Drawing.Point(13, 42);
-            this.ClbData.Name = "ClbData";
-            this.ClbData.Size = new System.Drawing.Size(226, 106);
-            this.ClbData.TabIndex = 0;
             // 
             // BtnSave
             // 
-            this.BtnSave.Location = new System.Drawing.Point(12, 206);
+            this.BtnSave.Location = new System.Drawing.Point(11, 229);
             this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(110, 46);
+            this.BtnSave.Size = new System.Drawing.Size(111, 46);
             this.BtnSave.TabIndex = 1;
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = true;
@@ -64,7 +54,7 @@ namespace WeerApp
             // 
             // BtnLoad
             // 
-            this.BtnLoad.Location = new System.Drawing.Point(128, 206);
+            this.BtnLoad.Location = new System.Drawing.Point(128, 229);
             this.BtnLoad.Name = "BtnLoad";
             this.BtnLoad.Size = new System.Drawing.Size(110, 46);
             this.BtnLoad.TabIndex = 2;
@@ -91,7 +81,7 @@ namespace WeerApp
             // 
             // BtnLoadResults
             // 
-            this.BtnLoadResults.Location = new System.Drawing.Point(11, 154);
+            this.BtnLoadResults.Location = new System.Drawing.Point(11, 177);
             this.BtnLoadResults.Name = "BtnLoadResults";
             this.BtnLoadResults.Size = new System.Drawing.Size(227, 46);
             this.BtnLoadResults.TabIndex = 6;
@@ -103,22 +93,77 @@ namespace WeerApp
             // 
             this.RtbResults.Location = new System.Drawing.Point(245, 12);
             this.RtbResults.Name = "RtbResults";
-            this.RtbResults.Size = new System.Drawing.Size(303, 240);
+            this.RtbResults.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.RtbResults.Size = new System.Drawing.Size(420, 263);
             this.RtbResults.TabIndex = 7;
             this.RtbResults.Text = "";
+            // 
+            // CbxTemperatuur
+            // 
+            this.CbxTemperatuur.AutoSize = true;
+            this.CbxTemperatuur.Location = new System.Drawing.Point(11, 42);
+            this.CbxTemperatuur.Name = "CbxTemperatuur";
+            this.CbxTemperatuur.Size = new System.Drawing.Size(112, 21);
+            this.CbxTemperatuur.TabIndex = 8;
+            this.CbxTemperatuur.Text = "Temperatuur";
+            this.CbxTemperatuur.UseVisualStyleBackColor = true;
+            // 
+            // CbxNeerslag
+            // 
+            this.CbxNeerslag.AutoSize = true;
+            this.CbxNeerslag.Location = new System.Drawing.Point(11, 69);
+            this.CbxNeerslag.Name = "CbxNeerslag";
+            this.CbxNeerslag.Size = new System.Drawing.Size(87, 21);
+            this.CbxNeerslag.TabIndex = 9;
+            this.CbxNeerslag.Text = "Neerslag";
+            this.CbxNeerslag.UseVisualStyleBackColor = true;
+            // 
+            // CbxWind
+            // 
+            this.CbxWind.AutoSize = true;
+            this.CbxWind.Location = new System.Drawing.Point(11, 96);
+            this.CbxWind.Name = "CbxWind";
+            this.CbxWind.Size = new System.Drawing.Size(62, 21);
+            this.CbxWind.TabIndex = 10;
+            this.CbxWind.Text = "Wind";
+            this.CbxWind.UseVisualStyleBackColor = true;
+            // 
+            // CbxLucht
+            // 
+            this.CbxLucht.AutoSize = true;
+            this.CbxLucht.Location = new System.Drawing.Point(11, 123);
+            this.CbxLucht.Name = "CbxLucht";
+            this.CbxLucht.Size = new System.Drawing.Size(65, 21);
+            this.CbxLucht.TabIndex = 11;
+            this.CbxLucht.Text = "Lucht";
+            this.CbxLucht.UseVisualStyleBackColor = true;
+            // 
+            // CbxZon
+            // 
+            this.CbxZon.AutoSize = true;
+            this.CbxZon.Location = new System.Drawing.Point(11, 150);
+            this.CbxZon.Name = "CbxZon";
+            this.CbxZon.Size = new System.Drawing.Size(55, 21);
+            this.CbxZon.TabIndex = 12;
+            this.CbxZon.Text = "Zon";
+            this.CbxZon.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 264);
+            this.ClientSize = new System.Drawing.Size(677, 287);
+            this.Controls.Add(this.CbxZon);
+            this.Controls.Add(this.CbxLucht);
+            this.Controls.Add(this.CbxWind);
+            this.Controls.Add(this.CbxNeerslag);
+            this.Controls.Add(this.CbxTemperatuur);
             this.Controls.Add(this.RtbResults);
             this.Controls.Add(this.BtnLoadResults);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CbxPlaats);
             this.Controls.Add(this.BtnLoad);
             this.Controls.Add(this.BtnSave);
-            this.Controls.Add(this.ClbData);
             this.Name = "Form1";
             this.Text = "Weer App";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -128,14 +173,17 @@ namespace WeerApp
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckedListBox ClbData;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.ComboBox CbxPlaats;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BtnLoadResults;
         private System.Windows.Forms.RichTextBox RtbResults;
+        private System.Windows.Forms.CheckBox CbxTemperatuur;
+        private System.Windows.Forms.CheckBox CbxNeerslag;
+        private System.Windows.Forms.CheckBox CbxWind;
+        private System.Windows.Forms.CheckBox CbxLucht;
+        private System.Windows.Forms.CheckBox CbxZon;
     }
 }
 

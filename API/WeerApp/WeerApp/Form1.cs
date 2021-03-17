@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +17,7 @@ namespace WeerApp
 {
     public partial class Form1 : Form
     {
-        public string Path = @"C:\Users\marck\OneDrive\Bureaublad\technova\C#\projecten\API\WeerApp\WeerAppGegevens.json";
+        public string Path = @"..\..\Gegevens.json";
         public string Json = "";
         public static string Plaatsen = @"..\..\Plaatsen.txt";
         public string[] PlaatsArray = File.ReadAllLines(Plaatsen);
@@ -30,34 +30,40 @@ namespace WeerApp
         private void Form1_Load(object sender, EventArgs e)
         {
             CbxPlaats.DataSource = PlaatsArray;
+            CbxPlaats.Text = "Amsterdam";
             LoadData();
         }
 
         public void LoadData()
         {
-            string Link = "https://weerlive.nl/api/json-data-10min.php?key=994540e0ad&locatie=" + CbxPlaats.Text;
-            WebClient client = new WebClient();
-            String content = client.DownloadString(Link);
-            Liveweer weerData = JsonConvert.DeserializeObject<Root>(content).liveweer[0];
+            Liveweer weerData = ReturnObject();
             Json = JsonConvert.SerializeObject(weerData, Formatting.Indented);
             string verw = "verwachting: " + weerData.verw + "\n";
             string temp = "teperatuur: " + weerData.temp + "°C\ngemiddelde teperatuur: " + weerData.gtemp + "°C\n";
             string neerslag = "neerslag: " + weerData.d0neerslag + "%\n";
             string wind = "windsnelheid: " + weerData.windms + " m/s\nwindrichting: " + weerData.windr + "\n";
             string lucht = "luchtdruk: " + weerData.luchtd + " hPa\nzicht: " + weerData.zicht + " km\n";
-            string zon = "zon: " + weerData.d0zon + "%\nzonsopkomst: " + weerData.sup + "\nzonsondergang: " + weerData.sunder; 
-            string result = verw + temp + neerslag + wind + lucht + zon;
+            string zon = "zon: " + weerData.d0zon + "%\nzonsopkomst: " + weerData.sup + "\nzonsondergang: " + weerData.sunder + "\n"; 
+            string result = verw + "\n";
+            string[] stringArray = { temp, neerslag, wind, lucht, zon };
+            CheckBox[] checkboxArray = this.Controls.OfType<CheckBox>().ToArray();
+            for (int i = 0; i < 5; i++)
+            {
+                if (checkboxArray[i].Checked)
+                {
+                    result += stringArray[i] + "\n";
+                }
+            }
             RtbResults.Text = result;
         }
 
-        public void Check()
+        public Liveweer ReturnObject()
         {
-            RtbResults.Text = "";
-            for (int i = 0; i < ClbData.CheckedItems.Count; i++)
-            {
-                string[] Text = { };
-                Text[1] = ClbData.CheckedItems[i].ToString();
-            }
+            string Link = "https://weerlive.nl/api/json-data-10min.php?key=994540e0ad&locatie=" + CbxPlaats.Text;
+            WebClient client = new WebClient();
+            String content = client.DownloadString(Link);
+            Liveweer weerData = JsonConvert.DeserializeObject<Root>(content).liveweer[0];
+            return weerData;
         }
 
         private void LoadResults(object sender, EventArgs e)
@@ -103,6 +109,23 @@ namespace WeerApp
                     Json = File.ReadAllText(FilePath);
                     Liveweer weerData = JsonConvert.DeserializeObject<Liveweer>(Json);
                     CbxPlaats.Text = weerData.plaats;
+                    string verw = "verwachting: " + weerData.verw + "\n";
+                    string temp = "teperatuur: " + weerData.temp + "°C\ngemiddelde teperatuur: " + weerData.gtemp + "°C\n";
+                    string neerslag = "neerslag: " + weerData.d0neerslag + "%\n";
+                    string wind = "windsnelheid: " + weerData.windms + " m/s\nwindrichting: " + weerData.windr + "\n";
+                    string lucht = "luchtdruk: " + weerData.luchtd + " hPa\nzicht: " + weerData.zicht + " km\n";
+                    string zon = "zon: " + weerData.d0zon + "%\nzonsopkomst: " + weerData.sup + "\nzonsondergang: " + weerData.sunder + "\n";
+                    string result = verw + "\n";
+                    string[] stringArray = { temp, neerslag, wind, lucht, zon };
+                    CheckBox[] checkboxArray = this.Controls.OfType<CheckBox>().ToArray();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (checkboxArray[i].Checked)
+                        {
+                            result += stringArray[i] + "\n";
+                        }
+                    }
+                    RtbResults.Text = result;
                 }
             }
         }
