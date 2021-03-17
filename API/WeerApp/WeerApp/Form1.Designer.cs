@@ -29,6 +29,7 @@ namespace WeerApp
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.BtnSave = new System.Windows.Forms.Button();
             this.BtnLoad = new System.Windows.Forms.Button();
             this.CbxPlaats = new System.Windows.Forms.ComboBox();
@@ -93,6 +94,7 @@ namespace WeerApp
             // 
             this.RtbResults.Location = new System.Drawing.Point(245, 12);
             this.RtbResults.Name = "RtbResults";
+            this.RtbResults.ReadOnly = true;
             this.RtbResults.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.RtbResults.Size = new System.Drawing.Size(420, 263);
             this.RtbResults.TabIndex = 7;
@@ -164,6 +166,9 @@ namespace WeerApp
             this.Controls.Add(this.CbxPlaats);
             this.Controls.Add(this.BtnLoad);
             this.Controls.Add(this.BtnSave);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Weer App";
             this.Load += new System.EventHandler(this.Form1_Load);

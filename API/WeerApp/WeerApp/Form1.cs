@@ -21,6 +21,7 @@ namespace WeerApp
         public string Json = "";
         public static string Plaatsen = @"..\..\Plaatsen.txt";
         public string[] PlaatsArray = File.ReadAllLines(Plaatsen);
+        public bool NoString = true;
 
         public Form1()
         {
@@ -41,12 +42,12 @@ namespace WeerApp
             string verw = "verwachting: " + weerData.verw + "\n";
             string temp = "teperatuur: " + weerData.temp + "°C\ngemiddelde teperatuur: " + weerData.gtemp + "°C\n";
             string neerslag = "neerslag: " + weerData.d0neerslag + "%\n";
-            string wind = "windsnelheid: " + weerData.windms + " m/s\nwindrichting: " + weerData.windr + "\n";
+            string wind = "windsnelheid: " + weerData.windms + " m/s\nwindrichting: " + weerData.d0windr + "\n";
             string lucht = "luchtdruk: " + weerData.luchtd + " hPa\nzicht: " + weerData.zicht + " km\n";
             string zon = "zon: " + weerData.d0zon + "%\nzonsopkomst: " + weerData.sup + "\nzonsondergang: " + weerData.sunder + "\n"; 
             string result = verw + "\n";
             string[] stringArray = { temp, neerslag, wind, lucht, zon };
-            CheckBox[] checkboxArray = this.Controls.OfType<CheckBox>().ToArray();
+            CheckBox[] checkboxArray = { CbxTemperatuur, CbxNeerslag, CbxWind, CbxLucht, CbxZon };
             for (int i = 0; i < 5; i++)
             {
                 if (checkboxArray[i].Checked)
@@ -59,11 +60,21 @@ namespace WeerApp
 
         public Liveweer ReturnObject()
         {
-            string Link = "https://weerlive.nl/api/json-data-10min.php?key=994540e0ad&locatie=" + CbxPlaats.Text;
-            WebClient client = new WebClient();
-            String content = client.DownloadString(Link);
-            Liveweer weerData = JsonConvert.DeserializeObject<Root>(content).liveweer[0];
-            return weerData;
+
+            if (NoString)
+            {            
+                string Link = "https://weerlive.nl/api/json-data-10min.php?key=994540e0ad&locatie=" + CbxPlaats.Text;
+                WebClient client = new WebClient();
+                String content = client.DownloadString(Link);
+                Liveweer weerData = JsonConvert.DeserializeObject<Root>(content).liveweer[0];
+                return weerData;
+            }
+            else
+            {
+                Liveweer weerData = JsonConvert.DeserializeObject<Liveweer>(Json);
+                NoString = true;
+                return weerData;
+            }
         }
 
         private void LoadResults(object sender, EventArgs e)
@@ -107,25 +118,8 @@ namespace WeerApp
                 {
                     FilePath = openFileDialog.FileName;
                     Json = File.ReadAllText(FilePath);
-                    Liveweer weerData = JsonConvert.DeserializeObject<Liveweer>(Json);
-                    CbxPlaats.Text = weerData.plaats;
-                    string verw = "verwachting: " + weerData.verw + "\n";
-                    string temp = "teperatuur: " + weerData.temp + "°C\ngemiddelde teperatuur: " + weerData.gtemp + "°C\n";
-                    string neerslag = "neerslag: " + weerData.d0neerslag + "%\n";
-                    string wind = "windsnelheid: " + weerData.windms + " m/s\nwindrichting: " + weerData.windr + "\n";
-                    string lucht = "luchtdruk: " + weerData.luchtd + " hPa\nzicht: " + weerData.zicht + " km\n";
-                    string zon = "zon: " + weerData.d0zon + "%\nzonsopkomst: " + weerData.sup + "\nzonsondergang: " + weerData.sunder + "\n";
-                    string result = verw + "\n";
-                    string[] stringArray = { temp, neerslag, wind, lucht, zon };
-                    CheckBox[] checkboxArray = this.Controls.OfType<CheckBox>().ToArray();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (checkboxArray[i].Checked)
-                        {
-                            result += stringArray[i] + "\n";
-                        }
-                    }
-                    RtbResults.Text = result;
+                    NoString = false;
+                    LoadData();
                 }
             }
         }
