@@ -1,127 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
 using System.IO;
-using Newtonsoft.Json;
-using System.Collections;
-using Microsoft.Azure.Management.Monitor.Fluent.Models;
+using System.Linq;
 
 namespace WeerApp
 {
     public partial class Form1 : Form
     {
-        public string Path = @"..\..\Gegevens.json";
-        public string Json = "";
-        public static string Plaatsen = @"..\..\Plaatsen.txt";
-        public string[] PlaatsArray = File.ReadAllLines(Plaatsen);
-        public bool NoString = true;
+        // Variables.
+        private string _json = "";
+        private readonly string[] _plaatsArray = File.ReadAllLines(@"..\..\Plaatsen.txt");
+        private CheckBox[] _checkboxArray;
 
         public Form1()
         {
             InitializeComponent();
         }
 
+        // Assigns values and placeholders on application launch.
         private void Form1_Load(object sender, EventArgs e)
         {
-            CbxPlaats.DataSource = PlaatsArray;
+            CbxPlaats.DataSource = _plaatsArray;
             CbxPlaats.Text = "Amsterdam";
-            LoadData();
+            _checkboxArray = new []{CbxTemperatuur, CbxNeerslag, CbxWind, CbxLucht, CbxZon};
+            
+            RtbResults.Text = Data.LoadData(CbxPlaats.Text, _checkboxArray);
+            _json = Data.ConvertJson();
         }
 
-        public void LoadData()
+        // Shows the requested results.
+        private void LoadResults(object sender, EventArgs e)
         {
-            Liveweer weerData = ReturnObject();
-            Json = JsonConvert.SerializeObject(weerData, Formatting.Indented);
-            string verw = "verwachting: " + weerData.verw + "\n";
-            string temp = "teperatuur: " + weerData.temp + "°C\ngemiddelde teperatuur: " + weerData.gtemp + "°C\n";
-            string neerslag = "neerslag: " + weerData.d0neerslag + "%\n";
-            string wind = "windsnelheid: " + weerData.windms + " m/s\nwindrichting: " + weerData.d0windr + "\n";
-            string lucht = "luchtdruk: " + weerData.luchtd + " hPa\nzicht: " + weerData.zicht + " km\n";
-            string zon = "zon: " + weerData.d0zon + "%\nzonsopkomst: " + weerData.sup + "\nzonsondergang: " + weerData.sunder + "\n"; 
-            string result = verw + "\n";
-            string[] stringArray = { temp, neerslag, wind, lucht, zon };
-            CheckBox[] checkboxArray = { CbxTemperatuur, CbxNeerslag, CbxWind, CbxLucht, CbxZon };
-            for (int i = 0; i < 5; i++)
+            if (_plaatsArray.Contains(char.ToUpper(CbxPlaats.Text[0]) + CbxPlaats.Text.Substring(1)))
             {
-                if (checkboxArray[i].Checked)
-                {
-                    result += stringArray[i] + "\n";
-                }
-            }
-            RtbResults.Text = result;
-        }
-
-        public Liveweer ReturnObject()
-        {
-
-            if (NoString)
-            {            
-                string Link = "https://weerlive.nl/api/json-data-10min.php?key=994540e0ad&locatie=" + CbxPlaats.Text;
-                WebClient client = new WebClient();
-                String content = client.DownloadString(Link);
-                Liveweer weerData = JsonConvert.DeserializeObject<Root>(content).liveweer[0];
-                return weerData;
+                CbxPlaats.Text = char.ToUpper(CbxPlaats.Text[0]) + CbxPlaats.Text.Substring(1);
+                RtbResults.Text = Data.LoadData(CbxPlaats.Text, _checkboxArray);
+                _json = Data.ConvertJson();
             }
             else
             {
-                Liveweer weerData = JsonConvert.DeserializeObject<Liveweer>(Json);
-                NoString = true;
-                return weerData;
+                MessageBox.Show("PLaats bestaat niet.");
             }
         }
 
-        private void LoadResults(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-
+        // Saves the current results.
         private void SaveJson(object sender, EventArgs e)
         {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-            {
-                saveFileDialog.InitialDirectory = "c:\\";
-                saveFileDialog.Filter = "json files (*.json)|*.json";
-
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (File.Exists(saveFileDialog.FileName) == true)
-                    {
-                        File.Delete(saveFileDialog.FileName);
-                    }
-                    using (Stream s = File.Open(saveFileDialog.FileName, FileMode.CreateNew))
-                    using (StreamWriter sw = new StreamWriter(s))
-                    { 
-                        sw.Write(Json);
-                    }
-                }
-            }
+            Files.Save(_json);
         }
 
+        // Opens/Loads previously saved results.
         private void LoadJson(object sender, EventArgs e)
         {
-            var FileContent = string.Empty;
-            var FilePath = string.Empty;
-
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "json files (*.json)|*.json";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    FilePath = openFileDialog.FileName;
-                    Json = File.ReadAllText(FilePath);
-                    NoString = false;
-                    LoadData();
-                }
-            }
+            RtbResults.Text = Files.Load(CbxPlaats.Text, _checkboxArray, _json);
+            _json = Data.ConvertJson();
+            CbxPlaats.Text = Data.GetLocation();
         }
     }
 }
